@@ -79,7 +79,7 @@ export default function Shop() {
   }, []);
 
   return <div className="site-shell">
-    <div className="announcement">9월 23일 재고표 기준 · 오전 11시까지 접수된 택배 주문은 당일 발송 안내</div>
+    <div className="announcement">오전 11시까지 접수된 택배 주문은 당일 발송 안내</div>
     <header className="site-header">
       <a className="brand" href="#top" aria-label="천지다 홈"><span className="brand-mark">天</span><span>천지다<small>CHEONJIDA TEA</small></span></a>
       <nav aria-label="주 메뉴"><a href="#products">차 고르기</a><a href="#guide">주문 안내</a></nav>
@@ -93,7 +93,7 @@ export default function Shop() {
       </section>
 
       <section id="products" className="products-section">
-        <div className="section-heading"><div><span className="eyebrow">THE COLLECTION</span><h2>차 고르기</h2><p>상품·용량·가격은 9월 23일 재고표를 기준으로 합니다.</p></div><span className="product-count">전체 8종</span></div>
+        <div className="section-heading"><div><span className="eyebrow">THE COLLECTION</span><h2>차 고르기</h2><p>상품·용량·가격은 현재 안내 기준입니다.</p></div><span className="product-count">전체 8종</span></div>
         <div className="filters" role="group" aria-label="상품 분류">{groups.map(g => <button key={g} className={group === g ? "active" : ""} onClick={() => setGroup(g)} aria-pressed={group === g}>{g}</button>)}</div>
         <div className="product-grid">{products.filter(p => group === "전체" || p.group === group).map((p, index) => <article key={p.id} className="product-card">
           <div className={`product-visual visual-${p.group === "청단차" ? "cake" : p.group === "은박 차" ? "silver" : "other"}`}><span>{String(index + 1).padStart(2, "0")}</span><div className="visual-center"><Leaf size={38} strokeWidth={1}/><strong>{p.name}</strong></div><small>{p.group}</small></div>
@@ -118,7 +118,7 @@ export default function Shop() {
         <label>요청 사항 <span className="optional">선택</span><textarea maxLength={300} value={form.note} onChange={e => setForm({ ...form, note: e.target.value })} placeholder="필요한 내용이 있으면 적어 주세요" rows={2}/></label>
         <input className="honeypot" tabIndex={-1} autoComplete="off" aria-hidden="true" value={form.website} onChange={e => setForm({ ...form, website: e.target.value })}/>
         <label className="consent"><input type="checkbox" checked={form.consent} onChange={e => setForm({ ...form, consent: e.target.checked })}/><span>주문 접수·배송 안내를 위해 이름, 소속센터, 연락처, 주소, 입금 여부와 요청 사항을 수집·이용하는 데 동의합니다. 주문 처리 후 삭제를 요청할 수 있습니다.</span></label>
-        <p className="checkout-notice">주문 접수만으로 입금이 확인되지는 않습니다. 표시된 수량은 9월 23일 기준이며 재고에 따라 품절될 수 있습니다.</p>
+        <p className="checkout-notice">주문 접수만으로 입금이 확인되지는 않습니다. 표시된 수량은 현재 안내 기준이며 재고에 따라 품절될 수 있습니다.</p>
         {error && <p className="form-error" role="alert">{error}</p>}
         <div className="sheet-actions"><button type="button" className="back-button" onClick={() => setCheckout(false)}>장바구니로</button><button className="primary-button" disabled={sending || !form.consent}>{sending ? "접수 중…" : "주문 접수하기"}</button></div>
       </form> : <div className="cart-content">{lines.length ? <><div className="cart-lines">{lines.map(({ product: p, quantity }) => <div className="cart-line" key={p.id}><div><strong>{p.name}</strong><span>{p.size} · {money(p.price)}</span></div><div className="quantity"><button onClick={() => change(p.id, -1)} aria-label={`${p.name} ${p.size} 한 개 빼기`}>{quantity === 1 ? <X size={14}/> : <Minus size={14}/>}</button><output>{quantity}</output><button disabled={quantity >= p.stock} onClick={() => change(p.id, 1)} aria-label={`${p.name} ${p.size} 한 개 더하기`}><Plus size={14}/></button></div></div>)}</div><div className="cart-total"><span>상품 금액</span><strong>{money(total)}</strong></div><p className="cart-note">택배 선택 시 배송비 5,000원이 추가됩니다.</p><button className="primary-button" onClick={() => setCheckout(true)}>주문 정보 입력하기</button></> : <div className="empty-cart"><ShoppingBag size={34} strokeWidth={1}/><p>아직 담은 차가 없습니다.</p><button onClick={() => setOpen(false)}>차 둘러보기</button></div>}</div>}

@@ -53,6 +53,7 @@ next-env.d.ts
 /examples/
 /scripts/
 /site/
+/assets/assets/
 /app/admin/
 /app/api/
 /app/chatgpt-auth.ts
